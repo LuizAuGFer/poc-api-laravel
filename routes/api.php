@@ -10,3 +10,7 @@ Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register'])
     ->middleware(['throttle:10,1']) // Limit to 10 requests per minute
     ->name('register');
+
+Route::group(['middleware' => ['auth:sanctum']], function() {
+    Route::apiResource('brands', \App\Http\Controllers\BrandController::class);
+});    
