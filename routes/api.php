@@ -13,4 +13,4 @@ Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('brands', \App\Http\Controllers\BrandController::class);
-});    
+});

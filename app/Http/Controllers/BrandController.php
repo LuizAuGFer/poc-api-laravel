@@ -14,9 +14,10 @@ class BrandController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $brand = $this->brandServices->list($request);
+        return $brand;
     }
 
     /**
@@ -41,7 +42,15 @@ class BrandController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $brand = $this->brandServices->show($id);
+
+        if (!$brand) {
+            return response()->json([
+                'message' => trans('message.not_found')
+            ], 404);
+        }
+    
+        return BrandResource::make($brand);
     }
 
     /**
@@ -55,9 +64,17 @@ class BrandController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(BrandRequest $request, string $id)
     {
-        //
+        $brand = $this->brandServices->update($request, $id);
+
+        if (!$brand) {
+            return response()->json([
+                'message' => trans('message.not_found')
+            ], 404);
+        }
+
+        return BrandResource::make($brand);
     }
 
     /**
@@ -65,6 +82,14 @@ class BrandController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $brand = $this->brandServices->delete($id);
+
+        if (!$brand) {
+            return response()->json([
+                'message' => trans('message.not_found')
+            ], 404);
+        }
+        
+        return BrandResource::make($brand);
     }
 }
