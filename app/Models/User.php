@@ -44,4 +44,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function cars(): BelongsToMany
+    {
+        return $this->belongsToMany(Car::class)
+            ->withPivot(['id', 'cover', 'plate']);
+    }
 }
